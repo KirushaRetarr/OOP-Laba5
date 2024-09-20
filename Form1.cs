@@ -19,17 +19,16 @@ namespace OOP_Laba5
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int[,] nums2 = { { 5, 1, -2, -5 }, { 6, -4, -5, 8 } };
-            int product = 1; // Инициализация произведения
+            int[,] matrix = { { 5, 1, -2, -5 }, { 6, -4, -5, 8 } };
+            int product = 1;
 
-            // Перебор элементов массива
-            for (int i = 0; i < nums2.GetLength(0); i++) // Перебор строк
+            for (int i = 0; i < matrix.GetLength(0); i++) 
             {
-                for (int j = 0; j < nums2.GetLength(1); j++) // Перебор столбцов
+                for (int j = 0; j < matrix.GetLength(1); j++) 
                 {
-                    if (nums2[i, j] > 0) // Проверка на положительность
+                    if (matrix[i, j] > 0) 
                     {
-                        product *= nums2[i, j]; // Умножаем положительное число
+                        product *= matrix[i, j];
                     }
                 }
             }
@@ -38,18 +37,16 @@ namespace OOP_Laba5
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int[,] nums2 = { { 5, 1, -2, -5 }, { 6, -4, -5, 8 } };
+            int[,] matrix = { { 5, 1, -2, -5 }, { 6, -4, -5, 8 } };
 
-            // Настройка DataGridView
-            dataGridView1.ColumnCount = nums2.GetLength(1); // Устанавливаем количество колонок
-            dataGridView1.RowCount = nums2.GetLength(0); // Устанавливаем количество строк
+            dataGridView1.ColumnCount = matrix.GetLength(1); 
+            dataGridView1.RowCount = matrix.GetLength(0); 
 
-            // Заполнение DataGridView
-            for (int i = 0; i < nums2.GetLength(0); i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                for (int j = 0; j < nums2.GetLength(1); j++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    dataGridView1.Rows[i].Cells[j].Value = nums2[i, j]; // Заполняем значение
+                    dataGridView1.Rows[i].Cells[j].Value = matrix[i, j];
                 }
             }
         }
