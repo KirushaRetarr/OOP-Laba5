@@ -7,47 +7,89 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace OOP_Laba5
 {
     public partial class Form1 : Form
     {
+        private Random random = new Random();
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            int[,] matrix = { { 5, 1, -2, -5 }, { 6, -4, -5, 8 } };
-            int product = 1;
-
-            for (int i = 0; i < matrix.GetLength(0); i++) 
-            {
-                for (int j = 0; j < matrix.GetLength(1); j++) 
-                {
-                    if (matrix[i, j] > 0) 
-                    {
-                        product *= matrix[i, j];
-                    }
-                }
-            }
-            textBox1.Text = product.ToString();
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            int[,] matrix = { { 5, 1, -2, -5 }, { 6, -4, -5, 8 } };
+            int rows = comboBox1.SelectedIndex + 1;
+            int cols = comboBox1.SelectedIndex + 1;
 
-            dataGridView1.ColumnCount = matrix.GetLength(1); 
-            dataGridView1.RowCount = matrix.GetLength(0); 
+            int[,] array = GenerateRandomArray(rows, cols);
 
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            DisplayArrayInGrid(array, rows, cols);
+
+            textBox1.Clear();
+
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                bool negativeFlag = false;
+                int multi = 1;
+
+                for (int j = 0; j < cols; j++)
                 {
-                    dataGridView1.Rows[i].Cells[j].Value = matrix[i, j];
+                    if (array[i, j] < 0)
+                    {
+                        negativeFlag = true;
+                        break;
+                    }         
                 }
+                if (!negativeFlag)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        multi *= array[i, j];
+                    }
+                    textBox1.AppendText($"Произведение в строке {i + 1}: {multi}\r\n");
+                }
+                else 
+                {
+                    textBox1.AppendText($"В строке {i + 1} есть отрицательные элементы.\r\n");
+                }
+            }
+        }
+
+        private int[,] GenerateRandomArray(int rows, int cols)
+        {
+            int[,] array = new int[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    array[i, j] = random.Next(-10, 10);
+                }
+            }
+            return array;
+        }
+
+        private void DisplayArrayInGrid(int[,] array, int rows, int cols)
+        {
+            dataGridView1.Columns.Clear();
+            dataGridView1.Rows.Clear();
+
+            for (int i = 0; i < rows; i++)
+            {
+                dataGridView1.Columns.Add($"Col{i}", $"Столбец {i + 1}");
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                string[] rowValues = new string[cols];
+                for (int j = 0; j < cols; j++)
+                {
+                    rowValues[j] = array[i, j].ToString();
+                }
+                dataGridView1.Rows.Add(rowValues);
             }
         }
     }
